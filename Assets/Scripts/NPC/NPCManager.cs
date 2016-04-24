@@ -1,12 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class NPCManager : MonoBehaviour {
+
+    public Dictionary<int, GameObject> npcList;
+    private Dictionary<int, int> assignedList;
 
     public static NPCManager Instance;
 
 	public void Start () {
         Instance = this;
+    }
+
+    public void assignNPC (int npc, int player)
+    {
+        if (assignedList.ContainsKey(npc)) {
+            assignedList[npc] = player;
+        } else {
+            assignedList.Add(npc, player);
+        }
     }
 
     public void prepareRespawn (NPC npc) {
