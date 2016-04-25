@@ -133,6 +133,11 @@ public class NPC : Photon.MonoBehaviour
             return;
         }
 
+		// static NPCs like vendors, dont have photonView as they dont perfom any action
+        if (!photonView) {
+            return;
+        }
+
         if (!photonView.isMine && gotFirstUpdate) {
 			transform.position = Vector3.Lerp(transform.position, correctPlayerPos, Time.deltaTime * this.SmoothingDelay);
 			transform.rotation = Quaternion.Lerp(transform.rotation, correctPlayerRot, Time.deltaTime * this.SmoothingDelay);
