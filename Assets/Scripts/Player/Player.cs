@@ -232,7 +232,7 @@ public class Player : Photon.MonoBehaviour {
             Destroy(GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>());
             Destroy(GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>());
             Destroy(GetComponent<Rigidbody>());
-			Destroy(GetComponent<NPCActivator> ());
+			Destroy(gameObject.transform.FindChild("NPCActivator"));
         }
     }
 
