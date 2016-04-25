@@ -119,7 +119,7 @@ public class NPC : Photon.MonoBehaviour
 	{
         if (isDead)
         {
-            if (!killNotiSent && PhotonNetwork.isMasterClient)
+            if (!killNotiSent && photonView.isMine)
             {
                 namePlate.health.fillAmount = 0;
 
@@ -133,7 +133,7 @@ public class NPC : Photon.MonoBehaviour
             return;
         }
 
-        if (!PhotonNetwork.isMasterClient && gotFirstUpdate) {
+        if (!photonView.isMine && gotFirstUpdate) {
 			transform.position = Vector3.Lerp(transform.position, correctPlayerPos, Time.deltaTime * this.SmoothingDelay);
 			transform.rotation = Quaternion.Lerp(transform.rotation, correctPlayerRot, Time.deltaTime * this.SmoothingDelay);
 		}
@@ -141,7 +141,7 @@ public class NPC : Photon.MonoBehaviour
         if (Application.isEditor) {
 			if (data.subRace != NPCData.creatureSubRace.Normal) {return;} // enable in debug to not verifiy if you are the master
 		} else {
-			if (data.subRace != NPCData.creatureSubRace.Normal || !PhotonNetwork.isMasterClient) {return;}
+			if (data.subRace != NPCData.creatureSubRace.Normal || !photonView.isMine) {return;}
 		}
 
         // check if target has died
@@ -240,7 +240,7 @@ public class NPC : Photon.MonoBehaviour
 	
 	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
 	{
-		if (PhotonNetwork.isMasterClient)
+		if (photonView.isMine)
 		{
 			//We own this player: send the others our data
 			stream.SendNext(transform.position);
